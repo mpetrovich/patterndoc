@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "name": "patterndoc",
+  "version": "0.1.0",
+  "description": "Parser for PatternDoc documentation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mpetrovich/patterndoc.git"
+  },
+  "keywords": [
+    "patterndoc",
+    "jsdoc",
+    "kss",
+    "apidoc"
+  ],
+  "author": "Mike Petrovich <michael.c.petrovich@gmail.com> (https://github.com/mpetrovich/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mpetrovich/patterndoc/issues"
+  },
+  "homepage": "https://github.com/mpetrovich/patterndoc",
+  "dependencies": {
+    "pattern": "git+ssh://git@github.com:mpetrovich/pattern",
+    "lodash": "^2.4.1"
+  }
+}

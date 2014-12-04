@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "gulp": "^3.8.10",
-    "gulp-mocha": "^2.0.0"
+    "gulp-mocha": "^2.0.0",
+    "chai": "^1.10.0"
   }
 }

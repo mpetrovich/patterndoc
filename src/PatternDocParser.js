@@ -65,7 +65,7 @@ function configureFields() {
 		},
 		parse: function (lines, pattern) {
 			var paramStr = getSingleLineValue(lines, '@param');
-			var paramRegex = /^\s*\{(.*)\}\s*(\S+)\s*(?:-)?\s*(.*)$/;
+			var paramRegex = /^\s*\{(.*)\}\s*(\[[^\]]+\]|\S+)\s*(?:-)?\s*(.*)$/;
 			var paramMatches = paramStr.match(paramRegex);
 			var type = paramMatches[1].trim();
 			var description = paramMatches[3].trim();

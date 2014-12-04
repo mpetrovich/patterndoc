@@ -26,5 +26,8 @@
   "dependencies": {
     "pattern": "git+ssh://git@github.com:mpetrovich/pattern",
     "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10"
   }
 }

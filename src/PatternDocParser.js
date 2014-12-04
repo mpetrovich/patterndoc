@@ -19,7 +19,13 @@ function PatternDocParser() {
  * @param {String} source
  * @return {Array.<Pattern>}
  */
-PatternDocParser.prototype.parse = parse;
+PatternDocParser.prototype.parse = function (content) {
+	var commentBlocks = getCommentBlocks(content);
+	var patterns = _.map(commentBlocks, parseCommentBlock);
+	patterns = _.flatten(patterns);
+
+	return patterns;
+};
 
 /* ---------------------------------------------------------------------
  * Private
@@ -91,14 +97,6 @@ function configureFields() {
 			pattern.addExample(example, description);
 		}
 	});
-}
-
-function parse(content) {
-	var commentBlocks = getCommentBlocks(content);
-	var patterns = _.map(commentBlocks, parseCommentBlock);
-	patterns = _.flatten(patterns);
-
-	return patterns;
 }
 
 function getCommentBlocks(content) {

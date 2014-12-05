@@ -101,9 +101,8 @@ describe('PatternDocParser', function () {
 				it('should have the correct description', function () {
 					expect( example.description ).to.equal('Example usage of PatternA');
 				});
-				xit('should have the correct example', function () {
-					// @todo Fix failing test
-					expect( example.example ).to.equal('```\n<pattern-a\n\tparam-a="123"\n\tparam-b="{ foo: true }"\n\tparam-c="some value"\n</pattern-a>\n```');
+				it('should have the correct example', function () {
+					expect( example.example ).to.equal('```\n<pattern-a\n\tparam-a="123"\n\tparam-b="{ foo: true }"\n\tparam-c="some value"\n</pattern-a>\n```\n');
 				});
 			});
 		});

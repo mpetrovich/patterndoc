@@ -93,7 +93,7 @@ function configureFields() {
 		},
 		parse: function (lines, pattern) {
 			var description = getSingleLineValue(lines, '@example', parser);
-			var example = getMultiLineValue(lines, '', parser);
+			var example = getMultiLineValue(lines, '', parser, { preserveLineBreaks: true, preserveWhitespace: true });
 			pattern.addExample(example, description);
 		}
 	});
@@ -148,12 +148,13 @@ function getSingleLineValue(lines, fieldName) {
 	return fieldValue;
 }
 
-function getMultiLineValue(lines, fieldName, parser) {
+function getMultiLineValue(lines, fieldName, parser, options) {
+	options = options || {};
+
 	var fieldValue;
 	var line;
 	var parts = [];
 	var part;
-	var ignoreRegex = new RegExp('^[\\s\\*-]*(?:' + fieldName + '\\s+)?[/]*');
 
 	do {
 		line = lines.shift();
@@ -164,11 +165,18 @@ function getMultiLineValue(lines, fieldName, parser) {
 			break;
 		}
 
-		part = line.replace(ignoreRegex, '').trim();
+		if (options.preserveWhitespace) {
+			part = line.replace(/\s*\*\/\s*/, '');
+		}
+		else {
+			part = line.replace(new RegExp('^[\\s\\*-]*(?:' + fieldName + '\\s+)?[/]*'), '').trim();
+		}
+
 		parts.push(part);
 	} while (part && lines.length);
 
-	fieldValue = parts.join(' ').trim();
+	fieldValue = parts.join(options.preserveLineBreaks ? '\n' : ' ');
+	fieldValue = options.preserveWhitespace ? fieldValue : fieldValue.trim();
 	return fieldValue;
 }
 

@@ -102,6 +102,12 @@ function configureFields() {
 function getCommentBlocks(content) {
 	var commentBlockRegex = /\/\*([\s\S]+?)\*\//g;
 	var commentBlocks = content.match(commentBlockRegex);
+
+	commentBlocks = _.map(commentBlocks, function(commentBlock) {
+		// Removes comment block start/end dividers such as ----
+		return /\/\*[\s-=\*]*([\s\S]+?)\n[\s-=\*]*\*\//g.exec(commentBlock)[1];
+	});
+
 	return commentBlocks;
 }
 

@@ -5,26 +5,59 @@ describe('PatternDocParser', function () {
 
 	describe('parse()', function () {
 		var content = ''
-			+ '/**\n'
+			+ '/* ----------------------------------------\n'
 			+ ' * @pattern PatternA\n'
 			+ ' * @description A description for PatternA\n'
 			+ ' * @param {Number} paramA - Required parameter for PatternA\n'
 			+ ' * @param {Object} [paramB] - Optional parameter for PatternA\n'
 			+ ' * @param {String} [paramC=some default] - Optional parameter for PatternA with a default value\n'
-			+ ' * @example Example usage of PatternA\n'
+			+ ' * '
+			+ ' * @example Basic usage of PatternA\n'
+			+ '```\n'
+			+ '<pattern-a param-a="123"></pattern-a>\n'
+			+ '```\n'
+			+ ' * '
+			+ ' * @example Advanced usage of PatternA\n'
 			+ '```\n'
 			+ '<pattern-a\n'
 			+ '\tparam-a="123"\n'
 			+ '\tparam-b="{ foo: true }"\n'
 			+ '\tparam-c="some value"\n'
-			+ '</pattern-a>\n'
+			+ '></pattern-a>\n'
 			+ '```\n'
-			+ ' */\n';
+			+ ' * ---------------------------------------- */\n'
+			+ '\n'
+			+ 'Intermediate code\n'
+			+ '@param NotAParam\n'
+			+ '@pattern NotAPattern\n'
+			+ '@param NotAnotherParam\n'
+			+ '\n'
+			+ '/* ----------------------------------------\n'
+			+ ' * @pattern PatternB\n'
+			+ ' * @description A description for PatternB\n'
+			+ ' * @param {Number} paramA - Required parameter for PatternB\n'
+			+ ' * @param {Object} [paramB] - Optional parameter for PatternB\n'
+			+ ' * @param {String} [paramC=another default] - Optional parameter for PatternB with a default value\n'
+			+ ' * '
+			+ ' * @example Basic usage of PatternB\n'
+			+ '```\n'
+			+ '<pattern-b param-a="456"></pattern-b>\n'
+			+ '```\n'
+			+ ' * '
+			+ ' * @example Advanced usage of PatternB\n'
+			+ '```\n'
+			+ '<pattern-b\n'
+			+ '\tparam-a="456"\n'
+			+ '\tparam-b="{ bar: false }"\n'
+			+ '\tparam-c="another value"\n'
+			+ '></pattern-b>\n'
+			+ '```\n'
+			+ ' * ---------------------------------------- */\n';
 		var parser = new PatternDocParser();
 		var patterns = parser.parse(content);
 
 		it('should return the correct number of patterns', function () {
-			expect( patterns.length ).to.equal(1);
+			expect( patterns.length ).to.equal(2);
 		});
 
 		describe('1st pattern', function () {
@@ -92,17 +125,28 @@ describe('PatternDocParser', function () {
 			});
 
 			it('should have the correct number of pattern examples', function () {
-				expect( pattern.getExamples().length ).to.equal(1);
+				expect( pattern.getExamples().length ).to.equal(2);
 			});
 
 			describe('1st example', function () {
 				var example = pattern.getExamples()[0];
 
 				it('should have the correct description', function () {
-					expect( example.description ).to.equal('Example usage of PatternA');
+					expect( example.description ).to.equal('Basic usage of PatternA');
 				});
 				it('should have the correct example', function () {
-					expect( example.example ).to.equal('```\n<pattern-a\n\tparam-a="123"\n\tparam-b="{ foo: true }"\n\tparam-c="some value"\n</pattern-a>\n```\n');
+					expect( example.example ).to.equal('```\n<pattern-a param-a="123"></pattern-a>\n```');
+				});
+			});
+
+			describe('2nd example', function () {
+				var example = pattern.getExamples()[1];
+
+				it('should have the correct description', function () {
+					expect( example.description ).to.equal('Advanced usage of PatternA');
+				});
+				it('should have the correct example', function () {
+					expect( example.example ).to.equal('```\n<pattern-a\n\tparam-a="123"\n\tparam-b="{ foo: true }"\n\tparam-c="some value"\n></pattern-a>\n```');
 				});
 			});
 		});

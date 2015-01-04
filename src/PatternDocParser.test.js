@@ -16,7 +16,7 @@ describe('PatternDocParser', function () {
 			+ '```\n'
 			+ '<pattern-a param-a="123"></pattern-a>\n'
 			+ '```\n'
-			+ ' * '
+			+ ' * \n'
 			+ ' * @example Advanced usage of PatternA\n'
 			+ '```\n'
 			+ '<pattern-a\n'
@@ -43,7 +43,8 @@ describe('PatternDocParser', function () {
 			+ '```\n'
 			+ '<pattern-b param-a="456"></pattern-b>\n'
 			+ '```\n'
-			+ ' * '
+			+ ' * \n'
+			+ ' * \n'
 			+ ' * @example Advanced usage of PatternB\n'
 			+ '```\n'
 			+ '<pattern-b\n'
@@ -52,6 +53,7 @@ describe('PatternDocParser', function () {
 			+ '\tparam-c="another value"\n'
 			+ '></pattern-b>\n'
 			+ '```\n'
+			+ ' * \n'
 			+ ' * ---------------------------------------- */\n';
 		var parser = new PatternDocParser();
 		var patterns = parser.parse(content);

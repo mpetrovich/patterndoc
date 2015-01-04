@@ -171,6 +171,12 @@ function getMultiLineValue(lines, fieldName, parser, options) {
 			break;
 		}
 
+		// Ignores empty lines containing only a *
+		line = line.replace(/^\s*\*\s*$/, '');
+		if (!line.length) {
+			continue;
+		}
+
 		if (options.preserveWhitespace) {
 			part = line.replace(/\s*\*\/\s*/, '');
 		}

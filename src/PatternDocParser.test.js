@@ -150,6 +150,97 @@ describe('PatternDocParser', function () {
 				});
 			});
 		});
+
+		describe('2nd pattern', function () {
+			var pattern = patterns[1];
+
+			it('should have the correct pattern name', function () {
+				expect( pattern.getName() ).to.equal('PatternB');
+			});
+			it('should have the correct pattern description', function () {
+				expect( pattern.getDescription() ).to.equal('A description for PatternB');
+			});
+			it('should have the correct number of pattern parameters', function () {
+				expect( pattern.getParameters().length ).to.equal(3);
+			});
+
+			describe('1st parameter', function () {
+				var parameter = pattern.getParameters()[0];
+
+				it('should have the correct parameter name', function () {
+					expect( parameter.getName() ).to.equal('paramA');
+				});
+				it('should have the correct parameter type', function () {
+					expect( parameter.getType() ).to.equal('Number');
+				});
+				it('should have the correct parameter description', function () {
+					expect( parameter.getDescription() ).to.equal('Required parameter for PatternB');
+				});
+				it('should have the correct parameter default value', function () {
+					expect( parameter.getDefaultValue() ).to.be.undefined;
+				});
+			});
+
+			describe('2nd parameter', function () {
+				var parameter = pattern.getParameters()[1];
+
+				it('should have the correct parameter name', function () {
+					expect( parameter.getName() ).to.equal('paramB');
+				});
+				it('should have the correct parameter type', function () {
+					expect( parameter.getType() ).to.equal('Object');
+				});
+				it('should have the correct parameter description', function () {
+					expect( parameter.getDescription() ).to.equal('Optional parameter for PatternB');
+				});
+				it('should have the correct parameter default value', function () {
+					expect( parameter.getDefaultValue() ).to.be.undefined;
+				});
+			});
+
+			describe('3rd parameter', function () {
+				var parameter = pattern.getParameters()[2];
+
+				it('should have the correct parameter name', function () {
+					expect( parameter.getName() ).to.equal('paramC');
+				});
+				it('should have the correct parameter type', function () {
+					expect( parameter.getType() ).to.equal('String');
+				});
+				it('should have the correct parameter description', function () {
+					expect( parameter.getDescription() ).to.equal('Optional parameter for PatternB with a default value');
+				});
+				it('should have the correct parameter default value', function () {
+					expect( parameter.getDefaultValue() ).to.equal('another default');
+				});
+			});
+
+			it('should have the correct number of pattern examples', function () {
+				expect( pattern.getExamples().length ).to.equal(2);
+			});
+
+			describe('1st example', function () {
+				var example = pattern.getExamples()[0];
+
+				it('should have the correct description', function () {
+					expect( example.description ).to.equal('Basic usage of PatternB');
+				});
+				it('should have the correct example', function () {
+					expect( example.example ).to.equal('```\n<pattern-b param-a="456"></pattern-b>\n```');
+				});
+			});
+
+			describe('2nd example', function () {
+				var example = pattern.getExamples()[1];
+
+				it('should have the correct description', function () {
+					expect( example.description ).to.equal('Advanced usage of PatternB');
+				});
+				it('should have the correct example', function () {
+					expect( example.example ).to.equal('```\n<pattern-b\n\tparam-a="456"\n\tparam-b="{ bar: false }"\n\tparam-c="another value"\n></pattern-b>\n```');
+				});
+			});
+		});
 	});
 
 });

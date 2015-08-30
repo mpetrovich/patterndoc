@@ -19,7 +19,7 @@ function PatternDocParser() {
  * @param {String} source
  * @return {Array.<Pattern>}
  */
-PatternDocParser.prototype.parse = function (content) {
+PatternDocParser.prototype.parse = function(content) {
 	var commentBlocks = getCommentBlocks(content);
 	var patterns = _.map(commentBlocks, parseCommentBlock);
 	patterns = _.flatten(patterns);
@@ -38,10 +38,10 @@ function configureFields() {
 
 	this.fields.push({
 		name: 'name',
-		isMatch: function (line) {
+		isMatch: function(line) {
 			return isMatch(line, '@pattern');
 		},
-		parse: function (lines, pattern) {
+		parse: function(lines, pattern) {
 			var name = getSingleLineValue(lines, '@pattern');
 			pattern.setName(name);
 		}
@@ -49,10 +49,10 @@ function configureFields() {
 
 	this.fields.push({
 		name: 'description',
-		isMatch: function (line) {
+		isMatch: function(line) {
 			return isMatch(line, '@description');
 		},
-		parse: function (lines, pattern) {
+		parse: function(lines, pattern) {
 			var description = getMultiLineValue(lines, '@description', parser);
 			pattern.setDescription(description);
 		}
@@ -60,10 +60,10 @@ function configureFields() {
 
 	this.fields.push({
 		name: 'parameter',
-		isMatch: function (line) {
+		isMatch: function(line) {
 			return isMatch(line, '@param');
 		},
-		parse: function (lines, pattern) {
+		parse: function(lines, pattern) {
 			var paramStr = getSingleLineValue(lines, '@param');
 			var paramRegex = /^\s*\{(.*)\}\s*(\[[^\]]+\]|\S+)\s*(?:-)?\s*(.*)$/;
 			var paramMatches = paramStr.match(paramRegex);
@@ -88,10 +88,10 @@ function configureFields() {
 
 	this.fields.push({
 		name: 'example',
-		isMatch: function (line) {
+		isMatch: function(line) {
 			return isMatch(line, '@example');
 		},
-		parse: function (lines, pattern) {
+		parse: function(lines, pattern) {
 			var description = getSingleLineValue(lines, '@example', parser);
 			var example = getMultiLineValue(lines, '', parser, { preserveLineBreaks: true, preserveWhitespace: true });
 			pattern.addExample(example, description);
@@ -137,7 +137,7 @@ function parseCommentBlock(commentBlock) {
 }
 
 function getMatchingField(line, parser) {
-	var field = _.find(parser.fields, function (field) {
+	var field = _.find(parser.fields, function(field) {
 		return field.isMatch(line);
 	});
 	return field;

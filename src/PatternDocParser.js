@@ -105,7 +105,7 @@ function getCommentBlocks(content) {
 
 	commentBlocks = _.map(commentBlocks, function(commentBlock) {
 		// Removes comment block start/end dividers such as ----
-		return /\/\*[\s-=\*]*([\s\S]+?)\n[\s-=\*]*\*\//g.exec(commentBlock)[1];
+		return /\/\*[\s-=\*]*([\s\S]+?)\n?[\s-=\*]*\*\//g.exec(commentBlock)[1];
 	});
 
 	return commentBlocks;

@@ -32,6 +32,8 @@ describe('PatternDocParser', function () {
 			+ '@pattern NotAPattern\n'
 			+ '@param NotAnotherParam\n'
 			+ '\n'
+			+ '/* @todo A random comment */\n'
+			+ '\n'
 			+ '/* ----------------------------------------\n'
 			+ ' * @pattern PatternB\n'
 			+ ' * @description A description for PatternB\n'

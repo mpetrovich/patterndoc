@@ -1,6 +1,6 @@
 var _ = require('lodash');
-var Pattern = require('pattern').Pattern;
-var PatternParameter = require('pattern').PatternParameter;
+var Pattern = require('patternly-pattern').Pattern;
+var PatternParameter = require('patternly-pattern').PatternParameter;
 
 /**
  * @constructs

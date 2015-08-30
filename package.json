@@ -1,6 +1,5 @@
 {
-  "private": true,
-  "name": "patterndoc",
+  "name": "patternly-patterndoc",
   "version": "0.1.0",
   "description": "Parser for PatternDoc documentation",
   "main": "index.js",
@@ -9,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mpetrovich/patterndoc.git"
+    "url": "git://github.com/mpetrovich/patternly-patterndoc.git"
   },
   "keywords": [
     "patterndoc",
@@ -20,12 +19,12 @@
   "author": "Mike Petrovich <michael.c.petrovich@gmail.com> (https://github.com/mpetrovich/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mpetrovich/patterndoc/issues"
+    "url": "https://github.com/mpetrovich/patternly-patterndoc/issues"
   },
-  "homepage": "https://github.com/mpetrovich/patterndoc",
+  "homepage": "https://github.com/mpetrovich/patternly-patterndoc",
   "dependencies": {
-    "pattern": "git+ssh://git@github.com:mpetrovich/pattern",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "patternly-pattern": "^0.1.0"
   },
   "devDependencies": {
     "gulp": "^3.8.10",

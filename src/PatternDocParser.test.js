@@ -38,7 +38,14 @@ describe('PatternDocParser', function() {
 				+ '\n'
 				+ '/* ----------------------------------------\n'
 				+ ' * @pattern PatternB\n'
-				+ ' * @description A description for PatternB\n'
+				+ ' * @description\n'
+				+ ' * A description for PatternB\n'
+				+ ' * that starts on the following line\n'
+				+ ' * and spans multiple lines.\n'
+				+ ' * \n'
+				+ ' * The description continues on even more\n'
+				+ ' * lines here.\n'
+				+ ' * \n'
 				+ ' * @param {Number} paramA - Required parameter for PatternB\n'
 				+ ' * @param {Object} [paramB] - Optional parameter for PatternB\n'
 				+ ' * @param {String} [paramC=another default] - Optional parameter for PatternB with a default value\n'
@@ -165,7 +172,7 @@ describe('PatternDocParser', function() {
 					expect( pattern.getName() ).to.equal('PatternB');
 				});
 				it('should have the correct pattern description', function() {
-					expect( pattern.getDescription() ).to.equal('A description for PatternB');
+					expect( pattern.getDescription() ).to.equal('A description for PatternB that starts on the following line and spans multiple lines. The description continues on even more lines here.');
 				});
 				it('should have the correct number of pattern parameters', function() {
 					expect( pattern.getParameters().length ).to.equal(3);

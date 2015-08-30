@@ -177,18 +177,26 @@ function getMultiLineValue(lines, fieldName, parser, options) {
 			continue;
 		}
 
+		// @todo Clean this up
 		if (options.preserveWhitespace) {
 			part = line.replace(/\s*\*\/\s*/, '');
 		}
 		else {
-			part = line.replace(new RegExp('^[\\s\\*-]*(?:' + fieldName + '\\s+)?[/]*'), '').trim();
+			part = line.replace(/^[\s\*-]*[\/]*/, '').trim();
 		}
 
 		parts.push(part);
 	} while (part && lines.length);
 
+	// Handles line breaks
 	fieldValue = parts.join(options.preserveLineBreaks ? '\n' : ' ');
+
+	// Removes the leading field name, if present
+	fieldValue = fieldValue.replace(new RegExp('^' + fieldName + '\\s*'), '');
+
+	// Handles surrounding whitespace
 	fieldValue = options.preserveWhitespace ? fieldValue : fieldValue.trim();
+
 	return fieldValue;
 }
 

@@ -97,12 +97,16 @@ function configureFields() {
 			var blocks = content.match(/```(.*\n)+?```/gm);
 			var codeBlocks = _.map(blocks, function(block) {
 				var syntaxMatches = block.match(/```(\S+)/);
+				var code = block
+					.replace(/```\S*\n/m, '')  // Removes leading ```[syntax]
+					.replace(/\n```.*/m, '');  // Removes trailing ```
+
+				code = removeCommonIndent(code);
+
 				return {
 					syntax: syntaxMatches ? syntaxMatches[1] : null,
-					code: block
-						.replace(/```\S*\n/m, '')  // Removes leading ```[syntax]
-						.replace(/\n```.*/m, ''),  // Removes trailing ```
-				}
+					code: code,
+				};
 			});
 			pattern.addExample(description, codeBlocks);
 		}
@@ -198,12 +202,49 @@ function getMultiLineValue(lines, fieldName, parser, options) {
 		}
 	} while (lines.length);
 
-	// Removes the leading field name and optionally whitespace
+	// Removes the leading field name
 	fieldValue = fieldValue.replace(new RegExp('^' + fieldName + '\\s*'), '');
+
+	// Removes whitespace
 	fieldValue = fieldValue.replace(/\s+\n/g, '\n');
 	fieldValue = options.preserveWhitespace ? fieldValue : fieldValue.trim();
+	fieldValue = removeCommonIndent(fieldValue);
 
 	return fieldValue;
+}
+
+function removeCommonIndent(text) {
+	var lines = text.split('\n');
+	var indents = _.map(lines, function(line) {
+		var indentMatch = line.match(/^\s+/);
+		var indent = indentMatch ? indentMatch[0] : '';
+		return indent;
+	});
+	var commonIndent = getLongestCommonSubstring(indents);
+
+	lines = _.map(lines, function(line) {
+		return line.replace(new RegExp('^' + commonIndent), '');
+	});
+	return lines.join('\n');
+}
+
+/**
+ * Credit: http://stackoverflow.com/a/1917041
+ *
+ * @param {Array.<String>} strings
+ * @return {String}
+ */
+function getLongestCommonSubstring(strings) {
+	strings = strings.concat().sort();
+
+	var first = _.first(strings);
+	var last = _.last(strings);
+	var index = 0;
+
+	while (index < first.length && first.charAt(index) === last.charAt(index))
+		index++;
+
+	return first.substring(0, index);
 }
 
 module.exports = PatternDocParser;

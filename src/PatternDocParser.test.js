@@ -22,9 +22,9 @@ describe('PatternDocParser', function() {
 				+ ' * @example Advanced usage of PatternA\n'
 				+ '```\n'
 				+ '<pattern-a\n'
-				+ '\tparam-a="123"\n'
-				+ '\tparam-b="{ foo: true }"\n'
-				+ '\tparam-c="some value"\n'
+				+ '	param-a="123"\n'
+				+ '	param-b="{ foo: true }"\n'
+				+ '	param-c="some value"\n'
 				+ '></pattern-a>\n'
 				+ '```\n'
 				+ ' * ---------------------------------------- */\n'
@@ -36,8 +36,9 @@ describe('PatternDocParser', function() {
 				+ '\n'
 				+ '/* @todo A random comment */\n'
 				+ '\n'
-				+ '/* ----------------------------------------\n'
+				+ '/**\n'
 				+ ' * @pattern PatternB\n'
+				+ ' * \n'
 				+ ' * @description\n'
 				+ ' * A description for PatternB\n'
 				+ ' * that starts on the following line\n'
@@ -57,15 +58,19 @@ describe('PatternDocParser', function() {
 				+ ' * \n'
 				+ ' * \n'
 				+ ' * @example Advanced usage of PatternB\n'
+				+ '```js\n'
+				+ 'scope.foo = "bar";\n'
+				+ 'scope.what = "who";\n'
 				+ '```\n'
+				+ '```html\n'
 				+ '<pattern-b\n'
-				+ '\tparam-a="456"\n'
-				+ '\tparam-b="{ bar: false }"\n'
-				+ '\tparam-c="another value"\n'
+				+ '	param-a="456"\n'
+				+ '	param-b="{ bar: false }"\n'
+				+ '	param-c="another value"\n'
 				+ '></pattern-b>\n'
 				+ '```\n'
 				+ ' * \n'
-				+ ' * ---------------------------------------- */\n';
+				+ ' */\n';
 
 			var parser = new PatternDocParser();
 			var patterns = parser.parse(content);
@@ -149,7 +154,11 @@ describe('PatternDocParser', function() {
 						expect( example.description ).to.equal('Basic usage of PatternA');
 					});
 					it('should have the correct example', function() {
-						expect( example.example ).to.equal('```\n<pattern-a param-a="123"></pattern-a>\n```');
+						expect( example.example ).to.equal(''
+							+ '```\n'
+							+ '<pattern-a param-a="123"></pattern-a>\n'
+							+ '```'
+						);
 					});
 				});
 
@@ -160,7 +169,15 @@ describe('PatternDocParser', function() {
 						expect( example.description ).to.equal('Advanced usage of PatternA');
 					});
 					it('should have the correct example', function() {
-						expect( example.example ).to.equal('```\n<pattern-a\n\tparam-a="123"\n\tparam-b="{ foo: true }"\n\tparam-c="some value"\n></pattern-a>\n```');
+						expect( example.example ).to.equal(''
+							+ '```\n'
+							+ '<pattern-a\n'
+							+ '	param-a="123"\n'
+							+ '	param-b="{ foo: true }"\n'
+							+ '	param-c="some value"\n'
+							+ '></pattern-a>\n'
+							+ '```'
+						);
 					});
 				});
 			});
@@ -172,7 +189,10 @@ describe('PatternDocParser', function() {
 					expect( pattern.getName() ).to.equal('PatternB');
 				});
 				it('should have the correct pattern description', function() {
-					expect( pattern.getDescription() ).to.equal('A description for PatternB that starts on the following line and spans multiple lines. The description continues on even more lines here.');
+					expect( pattern.getDescription() ).to.equal(''
+						+ 'A description for PatternB that starts on the following line and spans multiple lines.\n'
+						+ 'The description continues on even more lines here.'
+					);
 				});
 				it('should have the correct number of pattern parameters', function() {
 					expect( pattern.getParameters().length ).to.equal(3);
@@ -240,7 +260,11 @@ describe('PatternDocParser', function() {
 						expect( example.description ).to.equal('Basic usage of PatternB');
 					});
 					it('should have the correct example', function() {
-						expect( example.example ).to.equal('```\n<pattern-b param-a="456"></pattern-b>\n```');
+						expect( example.example ).to.equal(''
+							+ '```\n'
+							+ '<pattern-b param-a="456"></pattern-b>\n'
+							+ '```'
+						);
 					});
 				});
 
@@ -251,7 +275,19 @@ describe('PatternDocParser', function() {
 						expect( example.description ).to.equal('Advanced usage of PatternB');
 					});
 					it('should have the correct example', function() {
-						expect( example.example ).to.equal('```\n<pattern-b\n\tparam-a="456"\n\tparam-b="{ bar: false }"\n\tparam-c="another value"\n></pattern-b>\n```');
+						expect( example.example ).to.equal(''
+							+ '```js\n'
+							+ 'scope.foo = "bar";\n'
+							+ 'scope.what = "who";\n'
+							+ '```\n'
+							+ '```html\n'
+							+ '<pattern-b\n'
+							+ '	param-a="456"\n'
+							+ '	param-b="{ bar: false }"\n'
+							+ '	param-c="another value"\n'
+							+ '></pattern-b>\n'
+							+ '```'
+						);
 					});
 				});
 			});

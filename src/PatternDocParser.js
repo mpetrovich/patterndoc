@@ -93,7 +93,8 @@ function configureFields() {
 		},
 		parse: function(lines, pattern) {
 			var description = getSingleLineValue(lines, '@example', parser);
-			var example = getMultiLineValue(lines, '', parser, { preserveLineBreaks: true, preserveWhitespace: true });
+			var example = getMultiLineValue(lines, '', parser, { preserveWhitespace: true });
+			example = example.trim();
 			pattern.addExample(example, description);
 		}
 	});
@@ -157,44 +158,40 @@ function getSingleLineValue(lines, fieldName) {
 function getMultiLineValue(lines, fieldName, parser, options) {
 	options = options || {};
 
-	var fieldValue;
 	var line;
-	var parts = [];
-	var part;
+	var fieldValueLine;
+	var fieldValue = '';
 
 	do {
 		line = lines.shift();
 
-		if (parts.length && getMatchingField(line, parser)) {
+		if (fieldValue && getMatchingField(line, parser)) {
 			// Start of a different field
 			lines.unshift(line);
 			break;
 		}
 
-		// Ignores empty lines containing only a *
-		line = line.replace(/^\s*\*\s*$/, '');
-		if (!line.length) {
-			continue;
-		}
+		fieldValueLine = line
+			.replace(/^\s*\*\s*/, '')  // Removes leading comment borders
+			.replace(/\s*$/, '');  // Removes trailing whitespace
 
-		// @todo Clean this up
-		if (options.preserveWhitespace) {
-			part = line.replace(/\s*\*\/\s*/, '');
+		if (!fieldValueLine) {
+			// Empty lines are treated as newlines
+			fieldValue += '\n';
+		}
+		else if (options.preserveWhitespace) {
+			// Whitespace is preserved verbatim
+			fieldValue += fieldValueLine + '\n';
 		}
 		else {
-			part = line.replace(/^[\s\*-]*[\/]*/, '').trim();
+			// Newlines are converted to spaces
+			fieldValue += fieldValueLine + ' ';
 		}
+	} while (lines.length);
 
-		parts.push(part);
-	} while (part && lines.length);
-
-	// Handles line breaks
-	fieldValue = parts.join(options.preserveLineBreaks ? '\n' : ' ');
-
-	// Removes the leading field name, if present
+	// Removes the leading field name and optionally whitespace
 	fieldValue = fieldValue.replace(new RegExp('^' + fieldName + '\\s*'), '');
-
-	// Handles surrounding whitespace
+	fieldValue = fieldValue.replace(/\s+\n/g, '\n');
 	fieldValue = options.preserveWhitespace ? fieldValue : fieldValue.trim();
 
 	return fieldValue;

@@ -52,7 +52,7 @@ describe('PatternDocParser', function() {
 				+ ' * @param {String} [paramC=another default] - Optional parameter for PatternB with a default value\n'
 				+ ' * '
 				+ ' * @example Basic usage of PatternB\n'
-				+ '```\n'
+				+ '```html\n'
 				+ '<pattern-b param-a="456"></pattern-b>\n'
 				+ '```\n'
 				+ ' * \n'
@@ -154,11 +154,9 @@ describe('PatternDocParser', function() {
 						expect( example.description ).to.equal('Basic usage of PatternA');
 					});
 					it('should have the correct example', function() {
-						expect( example.example ).to.equal(''
-							+ '```\n'
-							+ '<pattern-a param-a="123"></pattern-a>\n'
-							+ '```'
-						);
+						expect( example.codeBlocks.length ).to.equal(1);
+						expect( example.codeBlocks[0].syntax ).to.be.null;
+						expect( example.codeBlocks[0].code ).to.equal('<pattern-a param-a="123"></pattern-a>');
 					});
 				});
 
@@ -169,14 +167,14 @@ describe('PatternDocParser', function() {
 						expect( example.description ).to.equal('Advanced usage of PatternA');
 					});
 					it('should have the correct example', function() {
-						expect( example.example ).to.equal(''
-							+ '```\n'
+						expect( example.codeBlocks.length ).to.equal(1);
+						expect( example.codeBlocks[0].syntax ).to.be.null;
+						expect( example.codeBlocks[0].code ).to.equal(''
 							+ '<pattern-a\n'
 							+ '	param-a="123"\n'
 							+ '	param-b="{ foo: true }"\n'
 							+ '	param-c="some value"\n'
-							+ '></pattern-a>\n'
-							+ '```'
+							+ '></pattern-a>'
 						);
 					});
 				});
@@ -260,11 +258,9 @@ describe('PatternDocParser', function() {
 						expect( example.description ).to.equal('Basic usage of PatternB');
 					});
 					it('should have the correct example', function() {
-						expect( example.example ).to.equal(''
-							+ '```\n'
-							+ '<pattern-b param-a="456"></pattern-b>\n'
-							+ '```'
-						);
+						expect( example.codeBlocks.length ).to.equal(1);
+						expect( example.codeBlocks[0].syntax ).to.equal('html');
+						expect( example.codeBlocks[0].code ).to.equal('<pattern-b param-a="456"></pattern-b>');
 					});
 				});
 
@@ -275,18 +271,21 @@ describe('PatternDocParser', function() {
 						expect( example.description ).to.equal('Advanced usage of PatternB');
 					});
 					it('should have the correct example', function() {
-						expect( example.example ).to.equal(''
-							+ '```js\n'
+						expect( example.codeBlocks.length ).to.equal(2);
+
+						expect( example.codeBlocks[0].syntax ).to.equal('js');
+						expect( example.codeBlocks[0].code ).to.equal(''
 							+ 'scope.foo = "bar";\n'
-							+ 'scope.what = "who";\n'
-							+ '```\n'
-							+ '```html\n'
+							+ 'scope.what = "who";'
+						);
+
+						expect( example.codeBlocks[1].syntax ).to.equal('html');
+						expect( example.codeBlocks[1].code ).to.equal(''
 							+ '<pattern-b\n'
 							+ '	param-a="456"\n'
 							+ '	param-b="{ bar: false }"\n'
 							+ '	param-c="another value"\n'
-							+ '></pattern-b>\n'
-							+ '```'
+							+ '></pattern-b>'
 						);
 					});
 				});

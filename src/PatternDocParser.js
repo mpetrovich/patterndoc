@@ -93,9 +93,18 @@ function configureFields() {
 		},
 		parse: function(lines, pattern) {
 			var description = getSingleLineValue(lines, '@example', parser);
-			var example = getMultiLineValue(lines, '', parser, { preserveWhitespace: true });
-			example = example.trim();
-			pattern.addExample(example, description);
+			var content = getMultiLineValue(lines, '', parser, { preserveWhitespace: true });
+			var blocks = content.match(/```(.*\n)+?```/gm);
+			var codeBlocks = _.map(blocks, function(block) {
+				var syntaxMatches = block.match(/```(\S+)/);
+				return {
+					syntax: syntaxMatches ? syntaxMatches[1] : null,
+					code: block
+						.replace(/```\S*\n/m, '')  // Removes leading ```[syntax]
+						.replace(/\n```.*/m, ''),  // Removes trailing ```
+				}
+			});
+			pattern.addExample(description, codeBlocks);
 		}
 	});
 }

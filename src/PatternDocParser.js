@@ -111,6 +111,17 @@ function configureFields() {
 			pattern.addExample(description, codeBlocks);
 		}
 	});
+
+	this.fields.push({
+		name: 'meta',
+		isMatch: function(line) {
+			return isMatch(line, '@meta');
+		},
+		parse: function(lines, pattern) {
+			var meta = getSingleLineKeyValue(lines, '@meta');
+			pattern.addMeta(meta.key, meta.value);
+		}
+	});
 }
 
 function getCommentBlocks(content) {
@@ -166,6 +177,15 @@ function getSingleLineValue(lines, fieldName) {
 	var regex = new RegExp('[\\s\\*]*' + fieldName + '\\s+(.*)');
 	var fieldValue = lines.shift().replace(regex, '$1').trim();
 	return fieldValue;
+}
+
+function getSingleLineKeyValue(lines, fieldName) {
+	var value = getSingleLineValue(lines, fieldName);
+	var keyValue = value.match(/^\s*(\S+)\s+(?:-\s*)?(.*?)\s*$/);  // Extracts '{key} - {value}' (dash is optional)
+	return {
+		key: keyValue ? keyValue[1] : null,
+		value: keyValue ? keyValue[2] : null,
+	};
 }
 
 function getMultiLineValue(lines, fieldName, parser, options) {

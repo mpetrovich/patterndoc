@@ -10,6 +10,8 @@ describe('PatternDocParser', function() {
 				+ '/* ----------------------------------------\n'
 				+ ' * @pattern PatternA\n'
 				+ ' * @description A description for PatternA\n'
+				+ ' * @meta category Foos & Bars\n'
+				+ ' * @meta version 1.0.3\n'
 				+ ' * @param {Number} paramA - Required parameter for PatternA\n'
 				+ ' * @param {Object} [paramB] - Optional parameter for PatternA\n'
 				+ ' * @param {String} [paramC=some default] - Optional parameter for PatternA with a default value\n'
@@ -38,6 +40,8 @@ describe('PatternDocParser', function() {
 				+ '\n'
 				+ '/**\n'
 				+ ' * @pattern PatternB\n'
+				+ ' * @meta version - 0.2.4\n'
+				+ ' * @meta category - Something\n'
 				+ ' * \n'
 				+ ' * @description\n'
 				+ ' * A description for PatternB\n'
@@ -87,6 +91,12 @@ describe('PatternDocParser', function() {
 				});
 				it('should have the correct pattern description', function() {
 					expect( pattern.getDescription() ).to.equal('A description for PatternA');
+				});
+				it('should have the correct meta category', function() {
+					expect( pattern.getMeta().category ).to.equal('Foos & Bars');
+				});
+				it('should have the correct meta version', function() {
+					expect( pattern.getMeta().version ).to.equal('1.0.3');
 				});
 				it('should have the correct number of pattern parameters', function() {
 					expect( pattern.getParameters().length ).to.equal(3);

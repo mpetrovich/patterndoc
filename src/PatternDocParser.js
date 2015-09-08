@@ -54,6 +54,11 @@ function configureFields() {
 		},
 		parse: function(lines, pattern) {
 			var description = getMultiLineValue(lines, '@description', parser);
+
+			description = description
+				.replace(/\s*(-{3,})\s*/gm, '\n$1\n')  // Moves a series of 3 or more dashes to its own line
+				.replace(/\n([^\n]+)\n(-{3,})\n/g, '\n\n$1\n$2\n');  // Adds an extra newline before the section header
+
 			pattern.setDescription(description);
 		}
 	});

@@ -52,6 +52,8 @@ describe('PatternDocParser', function() {
 				+ ' * @meta version - 0.2.4\n'
 				+ ' * @meta category - Something\n'
 				+ ' * \n'
+				+ ' * @deprecated Use PatternA instead\n'
+				+ ' * \n'
 				+ ' * @description\n'
 				+ ' * A description for PatternB\n'
 				+ ' * that starts on the following line\n'
@@ -261,6 +263,9 @@ describe('PatternDocParser', function() {
 				});
 				it('should have the correct todos', function() {
 					expect( pattern.getMeta().todos[0] ).to.equal('Some future task');
+				});
+				it('should have the correct deprecation message', function() {
+					expect( pattern.getMeta().deprecated ).to.equal('Use PatternA instead');
 				});
 
 				describe('1st parameter', function() {

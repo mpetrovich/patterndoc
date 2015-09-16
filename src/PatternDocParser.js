@@ -140,6 +140,17 @@ function configureFields() {
 			pattern.addMeta('todos', todos);
 		}
 	});
+
+	this.fields.push({
+		name: 'deprecated',
+		isMatch: function(line) {
+			return isMatch(line, '@deprecated');
+		},
+		parse: function(lines, pattern) {
+			var deprecated = getSingleLineValue(lines, '@deprecated');
+			pattern.addMeta('deprecated', deprecated);
+		}
+	});
 }
 
 function getCommentBlocks(content) {

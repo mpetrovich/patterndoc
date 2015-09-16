@@ -29,6 +29,12 @@ describe('PatternDocParser', function() {
 				+ '	param-c="some value"\n'
 				+ '></pattern-a>\n'
 				+ '```\n'
+				+ ' * \n'
+				+ ' * @example\n'
+				+ '```\n'
+				+ '<pattern-a param-a="456"></pattern-a>\n'
+				+ '```\n'
+				+ ' * \n'
 				+ ' * ---------------------------------------- */\n'
 				+ '\n'
 				+ 'Intermediate code\n'
@@ -166,7 +172,7 @@ describe('PatternDocParser', function() {
 				});
 
 				it('should have the correct number of pattern examples', function() {
-					expect( pattern.getExamples().length ).to.equal(2);
+					expect( pattern.getExamples().length ).to.equal(3);
 				});
 
 				describe('1st example', function() {
@@ -198,6 +204,19 @@ describe('PatternDocParser', function() {
 							+ '	param-c="some value"\n'
 							+ '></pattern-a>'
 						);
+					});
+				});
+
+				describe('3rd example', function() {
+					var example = pattern.getExamples()[2];
+
+					it('should have the correct description', function() {
+						expect( example.description ).to.equal('');
+					});
+					it('should have the correct example', function() {
+						expect( example.codeBlocks.length ).to.equal(1);
+						expect( example.codeBlocks[0].syntax ).to.be.null;
+						expect( example.codeBlocks[0].code ).to.equal('<pattern-a param-a="456"></pattern-a>');
 					});
 				});
 			});

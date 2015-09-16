@@ -179,7 +179,7 @@ function isMatch(line, fieldName) {
 }
 
 function getSingleLineValue(lines, fieldName) {
-	var regex = new RegExp('[\\s\\*]*' + fieldName + '\\s+(.*)');
+	var regex = new RegExp('[\\s\\*]*' + fieldName + '\\s*(.*)');
 	var fieldValue = lines.shift().replace(regex, '$1').trim();
 	return fieldValue;
 }

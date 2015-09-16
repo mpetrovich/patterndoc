@@ -127,6 +127,19 @@ function configureFields() {
 			pattern.addMeta(meta.key, meta.value);
 		}
 	});
+
+	this.fields.push({
+		name: 'todo',
+		isMatch: function(line) {
+			return isMatch(line, '@todo');
+		},
+		parse: function(lines, pattern) {
+			var todos = pattern.getMeta().todos || [];
+			var todo = getSingleLineValue(lines, '@todo');
+			todos.push(todo);
+			pattern.addMeta('todos', todos);
+		}
+	});
 }
 
 function getCommentBlocks(content) {

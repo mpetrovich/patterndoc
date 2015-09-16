@@ -15,7 +15,10 @@ describe('PatternDocParser', function() {
 				+ ' * @param {Number} paramA - Required parameter for PatternA\n'
 				+ ' * @param {Object} [paramB] - Optional parameter for PatternA\n'
 				+ ' * @param {String} [paramC=some default] - Optional parameter for PatternA with a default value\n'
-				+ ' * '
+				+ ' * \n'
+				+ ' * @todo First todo\n'
+				+ ' * @todo Another future task\n'
+				+ ' * \n'
 				+ ' * @example Basic usage of PatternA\n'
 				+ '```\n'
 				+ '<pattern-a param-a="123"></pattern-a>\n'
@@ -92,6 +95,7 @@ describe('PatternDocParser', function() {
 				+ '	></pattern-b>\n'
 				+ '```\n'
 				+ ' * \n'
+				+ ' * @todo Some future task\n'
 				+ ' */\n';
 
 			var parser = new PatternDocParser();
@@ -118,6 +122,13 @@ describe('PatternDocParser', function() {
 				});
 				it('should have the correct number of pattern parameters', function() {
 					expect( pattern.getParameters().length ).to.equal(3);
+				});
+				it('should have the correct number of todos', function() {
+					expect( pattern.getMeta().todos.length ).to.equal(2);
+				});
+				it('should have the correct todos', function() {
+					expect( pattern.getMeta().todos[0] ).to.equal('First todo');
+					expect( pattern.getMeta().todos[1] ).to.equal('Another future task');
 				});
 
 				describe('1st parameter', function() {
@@ -244,6 +255,12 @@ describe('PatternDocParser', function() {
 				});
 				it('should have the correct number of pattern parameters', function() {
 					expect( pattern.getParameters().length ).to.equal(3);
+				});
+				it('should have the correct number of todos', function() {
+					expect( pattern.getMeta().todos.length ).to.equal(1);
+				});
+				it('should have the correct todos', function() {
+					expect( pattern.getMeta().todos[0] ).to.equal('Some future task');
 				});
 
 				describe('1st parameter', function() {

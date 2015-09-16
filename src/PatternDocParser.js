@@ -97,7 +97,7 @@ function configureFields() {
 			return isMatch(line, '@example');
 		},
 		parse: function(lines, pattern) {
-			var description = getSingleLineValue(lines, '@example', parser);
+			var description = getSingleLineValue(lines, '@example');
 			var content = getMultiLineValue(lines, '', parser, { preserveWhitespace: true });
 			var blocks = content.match(/```(.*\n)+?```/gm);
 			var codeBlocks = _.map(blocks, function(block) {

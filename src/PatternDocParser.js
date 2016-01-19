@@ -290,8 +290,9 @@ function getLongestCommonSubstring(strings) {
 	var last = _.last(strings);
 	var index = 0;
 
-	while (index < first.length && first.charAt(index) === last.charAt(index))
+	while (index < first.length && first.charAt(index) === last.charAt(index)) {
 		index++;
+	}
 
 	return first.substring(0, index);
 }

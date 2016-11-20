@@ -55,23 +55,18 @@ describe('PatternDocParser', function() {
 				+ ' * @deprecated Use PatternA instead\n'
 				+ ' * \n'
 				+ ' * @description\n'
-				+ ' * A description for PatternB\n'
-				+ ' * that starts on the following line\n'
-				+ ' * and spans multiple lines.\n'
+				+ ' * This is a description for PatternB.\n'
 				+ ' * \n'
-				+ ' * The description continues on even more\n'
-				+ ' * lines here.\n'
+				+ ' * The description continues on even more lines here.\n'
 				+ ' * \n'
 				+ ' * \n'
 				+ ' * Section Heading\n'
-				+ ' * ------------------------------------------\n'
-				+ ' * It even has section breaks delimited by a\n'
-				+ ' * line of dashes.\n'
-				+ ' * \n'
+				+ ' * ---------------\n'
+				+ ' * It even has section breaks delimited by a line of dashes.\n'
 				+ ' * With more lines that follow.\n'
 				+ ' * \n'
 				+ ' * Another Heading\n'
-				+ ' * ------------------------------------------\n'
+				+ ' * ---------------\n'
 				+ ' * Lots of sections here.\n'
 				+ ' * \n'
 				+ ' * @param {Number} paramA - Required parameter for PatternB\n'
@@ -114,7 +109,7 @@ describe('PatternDocParser', function() {
 					expect( pattern.getName() ).to.equal('PatternA');
 				});
 				it('should have the correct pattern description', function() {
-					expect( pattern.getDescription() ).to.equal('A description for PatternA');
+					expect( pattern.getDescription() ).to.equal('A description for PatternA\n');
 				});
 				it('should have the correct meta category', function() {
 					expect( pattern.getMeta().category ).to.equal('Foos & Bars');
@@ -242,17 +237,20 @@ describe('PatternDocParser', function() {
 				});
 				it('should have the correct pattern description', function() {
 					expect( pattern.getDescription() ).to.equal(''
-						+ 'A description for PatternB that starts on the following line and spans multiple lines.\n'
+						+ '\nThis is a description for PatternB.\n'
+						+ '\n'
 						+ 'The description continues on even more lines here.\n'
 						+ '\n'
+						+ '\n'
 						+ 'Section Heading\n'
-						+ '------------------------------------------\n'
+						+ '---------------\n'
 						+ 'It even has section breaks delimited by a line of dashes.\n'
 						+ 'With more lines that follow.\n'
 						+ '\n'
 						+ 'Another Heading\n'
-						+ '------------------------------------------\n'
-						+ 'Lots of sections here.'
+						+ '---------------\n'
+						+ 'Lots of sections here.\n'
+						+ '\n'
 					);
 				});
 				it('should have the correct number of pattern parameters', function() {

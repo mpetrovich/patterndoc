@@ -54,11 +54,6 @@ function configureFields() {
 		},
 		parse: function(lines, pattern) {
 			var description = getMultiLineValue(lines, '@description', parser);
-
-			description = description
-				.replace(/\s*(-{3,})\s*/gm, '\n$1\n')  // Moves a series of 3 or more dashes to its own line
-				.replace(/\n([^\n]+)\n(-{3,})\n/g, '\n\n$1\n$2\n');  // Adds an extra newline before the section header
-
 			pattern.setDescription(description);
 		}
 	});
@@ -168,7 +163,10 @@ function getCommentBlocks(content) {
 function parseCommentBlock(commentBlock) {
 	var patterns = [];
 	var pattern;
-	var lines = commentBlock.split('\n');
+	var lineStartToken = '$PATTERNDOC_LINE_START$';
+	var lines = commentBlock
+		.replace(/\n/g, '\n' + lineStartToken)
+		.split(lineStartToken);
 
 	while (lines.length) {
 		var field = getMatchingField(lines[0], this);
@@ -233,31 +231,13 @@ function getMultiLineValue(lines, fieldName, parser, options) {
 			break;
 		}
 
-		fieldValueLine = line
-			.replace(/^\s*\*\s*/, '')  // Removes leading comment borders
-			.replace(/\s*$/, '');  // Removes trailing whitespace
+		// Removes leading comment borders
+		fieldValue += line.replace(/^[ \t]*\*[ \t]*/, '');
 
-		if (!fieldValueLine) {
-			// Empty lines are treated as newlines
-			fieldValue += '\n';
-		}
-		else if (options.preserveWhitespace) {
-			// Whitespace is preserved verbatim
-			fieldValue += fieldValueLine + '\n';
-		}
-		else {
-			// Newlines are converted to spaces
-			fieldValue += fieldValueLine + ' ';
-		}
 	} while (lines.length);
 
 	// Removes the leading field name
-	fieldValue = fieldValue.replace(new RegExp('^' + fieldName + '\\s*'), '');
-
-	// Removes whitespace
-	fieldValue = fieldValue.replace(/\s+\n/g, '\n');
-	fieldValue = options.preserveWhitespace ? fieldValue : fieldValue.trim();
-	fieldValue = removeCommonIndent(fieldValue);
+	fieldValue = fieldValue.replace(new RegExp('^' + fieldName + '\[ \t]*'), '');
 
 	return fieldValue;
 }

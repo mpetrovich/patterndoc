@@ -1,6 +1,6 @@
 {
   "name": "patternly-patterndoc",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Parser for PatternDoc documentation",
   "main": "index.js",
   "scripts": {

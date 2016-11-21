@@ -9,7 +9,7 @@ describe('PatternDocParser', function() {
 			var content = ''
 				+ '/* ----------------------------------------\n'
 				+ ' * @pattern PatternA\n'
-				+ ' * @description A description for PatternA\n'
+				+ ' * @summary A short summary for PatternA\n'
 				+ ' * @meta category Foos & Bars\n'
 				+ ' * @meta version 1.0.3\n'
 				+ ' * @param {Number} paramA - Required parameter for PatternA\n'
@@ -49,6 +49,7 @@ describe('PatternDocParser', function() {
 				+ '\n'
 				+ '/**\n'
 				+ ' * @pattern PatternB\n'
+				+ ' * @summary A short summary for PatternB\n'
 				+ ' * @meta version - 0.2.4\n'
 				+ ' * @meta category - Something\n'
 				+ ' * \n'
@@ -108,8 +109,8 @@ describe('PatternDocParser', function() {
 				it('should have the correct pattern name', function() {
 					expect( pattern.getName() ).to.equal('PatternA');
 				});
-				it('should have the correct pattern description', function() {
-					expect( pattern.getDescription() ).to.equal('A description for PatternA\n');
+				it('should have the correct pattern summary', function() {
+					expect( pattern.getSummary() ).to.equal('A short summary for PatternA');
 				});
 				it('should have the correct meta category', function() {
 					expect( pattern.getMeta().category ).to.equal('Foos & Bars');
@@ -234,6 +235,9 @@ describe('PatternDocParser', function() {
 
 				it('should have the correct pattern name', function() {
 					expect( pattern.getName() ).to.equal('PatternB');
+				});
+				it('should have the correct pattern summary', function() {
+					expect( pattern.getSummary() ).to.equal('A short summary for PatternB');
 				});
 				it('should have the correct pattern description', function() {
 					expect( pattern.getDescription() ).to.equal(''

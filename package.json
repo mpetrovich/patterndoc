@@ -24,7 +24,7 @@
   "homepage": "https://github.com/mpetrovich/patternly-patterndoc",
   "dependencies": {
     "lodash": "^2.4.1",
-    "patternly-pattern": "^0.5.0"
+    "patternly-pattern": "^0.6.0"
   },
   "devDependencies": {
     "chai": "^1.10.0",

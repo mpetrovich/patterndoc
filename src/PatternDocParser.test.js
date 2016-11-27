@@ -25,6 +25,7 @@ describe('PatternDocParser', function() {
 				+ '```\n'
 				+ ' * \n'
 				+ ' * @example Advanced usage of PatternA\n'
+				+ ' * @exampleHeight 300\n'
 				+ '```\n'
 				+ '<pattern-a\n'
 				+ '	param-a="123"\n'
@@ -81,6 +82,7 @@ describe('PatternDocParser', function() {
 				+ '\n'
 				+ '\n'
 				+ '@example Advanced usage of PatternB\n'
+				+ '@exampleHeight 250\n'
 				+ '```js\n'
 				+ 'scope.foo = "bar";\n'
 				+ 'scope.what = "who";\n'
@@ -202,6 +204,9 @@ describe('PatternDocParser', function() {
 
 					it('should have the correct description', function() {
 						expect( example.description ).to.equal('Advanced usage of PatternA');
+					});
+					it('should have the correct height', function() {
+						expect( example.height ).to.equal(300);
 					});
 					it('should have the correct example', function() {
 						expect( example.codeBlocks.length ).to.equal(1);
@@ -343,6 +348,9 @@ describe('PatternDocParser', function() {
 
 					it('should have the correct description', function() {
 						expect( example.description ).to.equal('Advanced usage of PatternB');
+					});
+					it('should have the correct height', function() {
+						expect( example.height ).to.equal(250);
 					});
 					it('should have the correct example', function() {
 						expect( example.codeBlocks.length ).to.equal(2);

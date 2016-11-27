@@ -104,6 +104,9 @@ function configureFields() {
 		},
 		parse: function(lines, pattern) {
 			var description = getSingleLineValue(lines, '@example');
+			var height = isMatch(lines[0], '@exampleHeight')
+				? getSingleLineValue(lines, '@exampleHeight')
+				: undefined;
 			var content = getMultiLineValue(lines, '', parser, { preserveWhitespace: true });
 			var blocks = content.match(/```(.*\n)+?```/gm);
 			var codeBlocks = _.map(blocks, function(block) {
@@ -119,7 +122,7 @@ function configureFields() {
 					code: code,
 				};
 			});
-			pattern.addExample(description, codeBlocks);
+			pattern.addExample(description, codeBlocks, height);
 		}
 	});
 

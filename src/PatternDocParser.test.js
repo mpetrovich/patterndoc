@@ -143,6 +143,9 @@ describe('PatternDocParser', function() {
 					it('should have the correct parameter description', function() {
 						expect( parameter.getDescription() ).to.equal('Required parameter for PatternA');
 					});
+					it('should be marked as required', function() {
+						expect( parameter.getRequired() ).to.be.true;
+					});
 					it('should have the correct parameter default value', function() {
 						expect( parameter.getDefaultValue() ).to.be.undefined;
 					});
@@ -160,6 +163,9 @@ describe('PatternDocParser', function() {
 					it('should have the correct parameter description', function() {
 						expect( parameter.getDescription() ).to.equal('Optional parameter for PatternA');
 					});
+					it('should be marked as not required', function() {
+						expect( parameter.getRequired() ).to.be.false;
+					});
 					it('should have the correct parameter default value', function() {
 						expect( parameter.getDefaultValue() ).to.be.undefined;
 					});
@@ -176,6 +182,9 @@ describe('PatternDocParser', function() {
 					});
 					it('should have the correct parameter description', function() {
 						expect( parameter.getDescription() ).to.equal('Optional parameter for PatternA with a default value');
+					});
+					it('should be marked as not required', function() {
+						expect( parameter.getRequired() ).to.be.false;
 					});
 					it('should have the correct parameter default value', function() {
 						expect( parameter.getDefaultValue() ).to.equal('some default');
@@ -287,6 +296,9 @@ describe('PatternDocParser', function() {
 					it('should have the correct parameter description', function() {
 						expect( parameter.getDescription() ).to.equal('Required parameter for PatternB');
 					});
+					it('should be marked as required', function() {
+						expect( parameter.getRequired() ).to.be.true;
+					});
 					it('should have the correct parameter default value', function() {
 						expect( parameter.getDefaultValue() ).to.be.undefined;
 					});
@@ -304,6 +316,9 @@ describe('PatternDocParser', function() {
 					it('should have the correct parameter description', function() {
 						expect( parameter.getDescription() ).to.equal('Optional parameter for PatternB');
 					});
+					it('should be marked as not required', function() {
+						expect( parameter.getRequired() ).to.be.false;
+					});
 					it('should have the correct parameter default value', function() {
 						expect( parameter.getDefaultValue() ).to.be.undefined;
 					});
@@ -320,6 +335,9 @@ describe('PatternDocParser', function() {
 					});
 					it('should have the correct parameter description', function() {
 						expect( parameter.getDescription() ).to.equal('Optional parameter for PatternB with a default value');
+					});
+					it('should be marked as not required', function() {
+						expect( parameter.getRequired() ).to.be.false;
 					});
 					it('should have the correct parameter default value', function() {
 						expect( parameter.getDefaultValue() ).to.equal('another default');

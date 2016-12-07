@@ -86,11 +86,13 @@ function configureFields() {
 			var nameMatches = nameStr.match(nameRegex);
 			var name = nameMatches[1];
 			var defaultValue = nameMatches[2];
+			var isOptional = /^\[[^\]]+\]$/.test(nameStr);
 
 			var parameter = new PatternParameter();
 			parameter.setName(name);
 			parameter.setDescription(description);
 			parameter.setType(type);
+			parameter.setRequired(!isOptional);
 			parameter.setDefaultValue(defaultValue);
 
 			pattern.addParameter(parameter);

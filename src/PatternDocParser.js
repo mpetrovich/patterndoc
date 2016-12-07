@@ -48,13 +48,13 @@ function configureFields() {
 	});
 
 	this.fields.push({
-		name: 'summary',
+		name: 'title',
 		isMatch: function(line) {
-			return isMatch(line, '@summary');
+			return isMatch(line, '@title');
 		},
 		parse: function(lines, pattern) {
-			var summary = getSingleLineValue(lines, '@summary');
-			pattern.setSummary(summary);
+			var title = getSingleLineValue(lines, '@title');
+			pattern.setTitle(title);
 		}
 	});
 
